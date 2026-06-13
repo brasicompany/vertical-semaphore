@@ -20,5 +20,8 @@ jobs:
       - name: Build
         run: swift build
 
+      - name: Build for iOS
+        run: xcodebuild -scheme VerticalSemaphore -destination 'generic/platform=iOS' build CODE_SIGNING_ALLOWED=NO
+
       - name: Test
         run: swift test

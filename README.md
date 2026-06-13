@@ -46,7 +46,7 @@ window auto-hide effect (`WindowChrome`) is macOS-only.
 - Version: `0.1.0`
 - License: MIT
 - Tests: `swift test`
-- CI: GitHub Actions on macOS
+- CI: GitHub Actions on macOS, with an iOS compile check
 - Public API surface: `VerticalSemaphore`, `SemaphoreStyle`, and macOS-only
   `WindowChromeController`
 
