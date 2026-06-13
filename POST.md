@@ -50,8 +50,8 @@ VerticalSemaphore(onClose:…, onMinimize:…, onZoom:…, style: .window)
   .verticalSemaphoreWindow(chrome)  // esconde nativas + revela no hover
 ```
 
-GitHub: github.com/brasico/VerticalSemaphore
-Feito pela @brasico 🇧🇷
+GitHub: github.com/brasicompany/vertical-semaphore
+Feito pela @brasicompany 🇧🇷
 
 ---
 
@@ -76,7 +76,7 @@ sensoriamento de layout.
 
 SwiftUI puro, macOS + iOS, MIT. Pronto pra Swift Package Manager.
 
-👉 github.com/brasico/VerticalSemaphore
+👉 github.com/brasicompany/vertical-semaphore
 
 #SwiftUI #macOS #DesignSystems #OpenSource #iOS
 
@@ -99,7 +99,7 @@ SwiftUI hover region would flicker. We drive the reveal off the raw cursor vs.
 the fixed window corner — decoupled, no oscillation.
 
 ```swift
-.package(url: "https://github.com/brasico/VerticalSemaphore.git", from: "0.1.0")
+.package(url: "https://github.com/brasicompany/vertical-semaphore.git", from: "0.1.0")
 ```
 
 ---
@@ -122,7 +122,7 @@ SwiftUI, macOS+iOS, MIT.
 ---
 
 ## Notas de uso
-- Troque `github.com/brasico/VerticalSemaphore` pela URL final.
+- URL final do repo: `github.com/brasicompany/vertical-semaphore`.
 - **Anexe um GIF**: cursor entrando no canto → luzes nativas aparecendo → saindo
   → semáforo vertical retomando. É o conteúdo que mais engaja em post de UI.
 - Use o `assets/preview.svg` como imagem de capa do README/post (já renderiza no GitHub).

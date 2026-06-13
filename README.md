@@ -4,12 +4,12 @@
 custom window chrome and tab strips, with the native macOS lights auto-hidden
 and revealed on hover.
 
-[![CI](https://github.com/brasico/VerticalSemaphore/actions/workflows/ci.yml/badge.svg)](https://github.com/brasico/VerticalSemaphore/actions/workflows/ci.yml)
+[![CI](https://github.com/brasicompany/vertical-semaphore/actions/workflows/ci.yml/badge.svg)](https://github.com/brasicompany/vertical-semaphore/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ![preview](assets/preview.svg)
 
-> The motif from [BRACOPED](https://brasico.ai) (Brasico). Apple's close /
+> The motif from BRACOPED (Brasico). Apple's close /
 > minimize / zoom cluster is horizontal — great for a titlebar, wrong for a
 > narrow side-rail or a tall tab. So we stacked it. Open-sourced, MIT.
 
@@ -30,7 +30,7 @@ A vertical semaphore fits all three, keeps the familiar Apple color language
 
 ```swift
 // Package.swift
-.package(url: "https://github.com/brasico/VerticalSemaphore.git", from: "0.1.0")
+.package(url: "https://github.com/brasicompany/vertical-semaphore.git", from: "0.1.0")
 ```
 Or in Xcode: **File ▸ Add Package Dependencies…** and paste the URL.
 
