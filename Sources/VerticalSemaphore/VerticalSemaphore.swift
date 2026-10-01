@@ -19,10 +19,17 @@ import SwiftUI
 ///
 /// Pass `nil` for any handler to render that dot dimmed and non-interactive
 /// (e.g. a tab that can only close → give only `onClose`).
+///
+/// Pass `onToggleSidebar` to add a side-panel reducer below the dots: a small
+/// sidebar glyph that collapses/expands the adjacent sidebar. The control only
+/// reports taps — the host owns the collapsed state and feeds it back through
+/// `isSidebarCollapsed` so the glyph reflects whether the left sidebar is open.
 public struct VerticalSemaphore: View {
     private let onClose: (() -> Void)?
     private let onMinimize: (() -> Void)?
     private let onZoom: (() -> Void)?
+    private let onToggleSidebar: (() -> Void)?
+    private let isSidebarCollapsed: Bool
     private let style: SemaphoreStyle
 
     @State private var hovering = false
@@ -31,11 +38,15 @@ public struct VerticalSemaphore: View {
         onClose: (() -> Void)? = nil,
         onMinimize: (() -> Void)? = nil,
         onZoom: (() -> Void)? = nil,
+        onToggleSidebar: (() -> Void)? = nil,
+        isSidebarCollapsed: Bool = false,
         style: SemaphoreStyle = SemaphoreStyle()
     ) {
         self.onClose = onClose
         self.onMinimize = onMinimize
         self.onZoom = onZoom
+        self.onToggleSidebar = onToggleSidebar
+        self.isSidebarCollapsed = isSidebarCollapsed
         self.style = style
     }
 
@@ -48,6 +59,15 @@ public struct VerticalSemaphore: View {
                          action: onMinimize, hovering: hovering, style: style)
             SemaphoreDot(color: style.zoomColor, glyph: "plus",
                          action: onZoom, hovering: hovering, style: style)
+
+            if let onToggleSidebar {
+                Capsule()
+                    .fill(style.sidebarGlyphColor.opacity(0.25))
+                    .frame(width: style.dotSize, height: 1)
+                    .accessibilityHidden(true)
+                SidebarToggleButton(action: onToggleSidebar, collapsed: isSidebarCollapsed,
+                                    hovering: hovering, style: style)
+            }
         }
         .padding(.vertical, style.showsCapsule ? 8 : 0)
         .padding(.horizontal, style.showsCapsule ? 6 : 0)
@@ -103,6 +123,30 @@ struct SemaphoreDot: View {
     }
 }
 
+/// The left side-panel reducer. Follows Apple's convention for a leading sidebar:
+/// the glyph is always `sidebar.left`, drawn filled while the panel is open and
+/// outlined once it is collapsed.
+struct SidebarToggleButton: View {
+    let action: () -> Void
+    let collapsed: Bool
+    let hovering: Bool
+    let style: SemaphoreStyle
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: "sidebar.left")
+                .symbolVariant(collapsed ? .none : .fill)
+                .font(.system(size: style.dotSize * 0.95, weight: .semibold))
+                .foregroundStyle(style.sidebarGlyphColor.opacity(hovering ? 1 : 0.7))
+                .frame(width: style.dotSize + style.hitPadding * 2,
+                       height: style.dotSize + style.hitPadding * 2)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text(collapsed ? "Expand sidebar" : "Collapse sidebar"))
+    }
+}
+
 #if DEBUG
 struct VerticalSemaphore_Previews: PreviewProvider {
     static var previews: some View {
@@ -110,6 +154,8 @@ struct VerticalSemaphore_Previews: PreviewProvider {
             VerticalSemaphore(onClose: {}, onMinimize: {}, onZoom: {}, style: .window)
             VerticalSemaphore(onClose: {}, onMinimize: {}, onZoom: {}, style: .tab)
             VerticalSemaphore(onClose: {}, style: .tab)   // close-only (a tab)
+            VerticalSemaphore(onClose: {}, onMinimize: {}, onZoom: {},
+                              onToggleSidebar: {}, style: .window)   // with sidebar reducer
         }
         .padding(50)
         .background(Color.gray.opacity(0.25))

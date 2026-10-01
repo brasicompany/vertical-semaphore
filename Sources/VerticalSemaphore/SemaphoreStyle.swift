@@ -26,6 +26,8 @@ public struct SemaphoreStyle: Sendable {
     public var showsGlyphsOnHover: Bool
     /// Soft glow under the active/hovered dot.
     public var glow: Bool
+    /// Tint of the sidebar reducer glyph (only drawn when `onToggleSidebar` is set).
+    public var sidebarGlyphColor: Color
 
     public init(
         closeColor: Color = SemaphoreStyle.appleRed,
@@ -36,7 +38,8 @@ public struct SemaphoreStyle: Sendable {
         hitPadding: CGFloat = 4,
         showsCapsule: Bool = false,
         showsGlyphsOnHover: Bool = true,
-        glow: Bool = true
+        glow: Bool = true,
+        sidebarGlyphColor: Color = .secondary
     ) {
         self.closeColor = closeColor
         self.minimizeColor = minimizeColor
@@ -47,6 +50,7 @@ public struct SemaphoreStyle: Sendable {
         self.showsCapsule = showsCapsule
         self.showsGlyphsOnHover = showsGlyphsOnHover
         self.glow = glow
+        self.sidebarGlyphColor = sidebarGlyphColor
     }
 
     /// Compact, glyph-less dots — sized for a tab chip.

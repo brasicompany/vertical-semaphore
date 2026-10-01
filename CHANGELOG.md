@@ -4,6 +4,13 @@ All notable changes to VerticalSemaphore are documented here.
 
 This project follows semantic versioning.
 
+## 0.2.0 - 2026-09-30
+
+- Added the optional sidebar reducer: `VerticalSemaphore(onToggleSidebar:isSidebarCollapsed:)`
+  renders a sidebar glyph below the dots that collapses/expands the left sidebar.
+- Added `SemaphoreStyle.sidebarGlyphColor`.
+- Existing initializers and presets are unchanged (source compatible).
+
 ## 0.1.0 - 2026-06-13
 
 Initial public release.

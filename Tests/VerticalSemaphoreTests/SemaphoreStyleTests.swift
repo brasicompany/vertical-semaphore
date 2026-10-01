@@ -41,4 +41,16 @@ final class SemaphoreStyleTests: XCTestCase {
         XCTAssertFalse(style.showsGlyphsOnHover)
         XCTAssertFalse(style.glow)
     }
+
+    func testSidebarGlyphColorIsConfigurableAndOptionalByDefault() {
+        XCTAssertEqual(SemaphoreStyle().sidebarGlyphColor, .secondary)
+        XCTAssertEqual(SemaphoreStyle(sidebarGlyphColor: .blue).sidebarGlyphColor, .blue)
+    }
+
+    func testSidebarReducerIsOptInAndKeepsExistingInitializerCompatible() {
+        // Existing call sites (no sidebar arguments) must keep compiling and render no reducer.
+        _ = VerticalSemaphore(onClose: {}, onMinimize: {}, onZoom: {}, style: .window)
+        _ = VerticalSemaphore(onClose: {}, onMinimize: {}, onZoom: {},
+                              onToggleSidebar: {}, isSidebarCollapsed: true, style: .window)
+    }
 }

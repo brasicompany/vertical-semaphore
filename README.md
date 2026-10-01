@@ -30,7 +30,7 @@ A vertical semaphore fits all three, keeps the familiar Apple color language
 
 ```swift
 // Package.swift
-.package(url: "https://github.com/brasicompany/vertical-semaphore.git", from: "0.1.0")
+.package(url: "https://github.com/brasicompany/vertical-semaphore.git", from: "0.2.0")
 ```
 Or in Xcode: **File ▸ Add Package Dependencies…** and paste the URL.
 
@@ -43,7 +43,7 @@ window auto-hide effect (`WindowChrome`) is macOS-only.
 
 ## Package status
 
-- Version: `0.1.0`
+- Version: `0.2.0`
 - License: MIT
 - Tests: `swift test`
 - CI: GitHub Actions on macOS, with an iOS compile check
@@ -94,6 +94,29 @@ VerticalSemaphore(onClose: onClose, onZoom: onDetach, style: .tab)
 
 Pass `nil` (or omit) any handler and that dot renders dimmed and non-interactive
 — so the control always shows the right number of affordances.
+
+## Collapse the side panel
+
+Add a sidebar reducer under the dots by passing `onToggleSidebar`. The control
+only reports taps; you own the state and feed it back through
+`isSidebarCollapsed` so the glyph reflects whether the **left** sidebar is open:
+
+```swift
+@State private var collapsed = false
+
+VerticalSemaphore(
+    onClose:    { NSApp.keyWindow?.performClose(nil) },
+    onMinimize: { NSApp.keyWindow?.performMiniaturize(nil) },
+    onZoom:     { NSApp.keyWindow?.performZoom(nil) },
+    onToggleSidebar: { withAnimation(.snappy) { collapsed.toggle() } },
+    isSidebarCollapsed: collapsed,
+    style: .window
+)
+```
+
+It is opt-in: without `onToggleSidebar` nothing changes. Tint the glyph with
+`SemaphoreStyle(sidebarGlyphColor:)`. VoiceOver reads "Collapse sidebar" /
+"Expand sidebar".
 
 ## How the window effect works (and the bug it avoids)
 

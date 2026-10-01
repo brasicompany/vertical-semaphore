@@ -7,9 +7,15 @@ import VerticalSemaphore
 struct WindowExample: View {
     @StateObject private var chrome = WindowChromeController()
     @Environment(\.controlActiveState) private var active
+    @State private var sidebarCollapsed = false
 
     var body: some View {
         HStack(spacing: 0) {
+            // A sidebar the reducer collapses.
+            Color(white: 0.16)
+                .frame(width: sidebarCollapsed ? 0 : 180)
+                .clipped()
+
             // Your app content.
             Color(white: 0.12)
                 .overlay(Text("Your content").foregroundStyle(.white.opacity(0.6)))
@@ -20,6 +26,8 @@ struct WindowExample: View {
                     onClose:    { NSApp.keyWindow?.performClose(nil) },
                     onMinimize: { NSApp.keyWindow?.performMiniaturize(nil) },
                     onZoom:     { NSApp.keyWindow?.performZoom(nil) },
+                    onToggleSidebar: { withAnimation(.snappy) { sidebarCollapsed.toggle() } },
+                    isSidebarCollapsed: sidebarCollapsed,
                     style: .window
                 )
                 .padding(.top, 14)
